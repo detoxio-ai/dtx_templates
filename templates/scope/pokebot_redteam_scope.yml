@@ -1,0 +1,97 @@
+agent:
+  capabilities: []
+  description: This is my dummy agent
+  external_integrations: []
+  include_attacker_goals: []
+  internal_integrations: []
+  llms: []
+  name: ''
+  restrictions: []
+  security_note: ''
+  trusted_users: []
+  untrusted_users: []
+environments: []
+providers: []
+redteam:
+  global_evaluator: null
+  max_plugin: 5
+  max_prompts_per_plugin: 5
+  plugins:
+    plugins:
+    - toxicity:hate_speech:harassment
+    - toxicity:hate_speech:discrimination
+    - toxicity:severe_toxicity:insults
+    - toxicity:severe_toxicity:profanity
+    - toxicity:graphic_violence:explicit
+    - toxicity:discrimination:radicalization
+    - misinformation:unreliable_experts:specialized
+    - misinformation:unsafe_health_practices:unverified-practices
+    - misinformation:unsafe_health_practices:unsafe-practices
+    - misinformation:misinterpretation:contracts
+    - misinformation:propaganda:politics
+    - misinformation:propaganda:religion
+    - misinformation:competition:direct_endorsement
+    - misinformation:competition:biased_comparison
+    - misinformation:competition:derogatory_mentions
+    - misinformation:competition:outdated_or_false_information
+    - misinformation:competition:unauthorized_comparisons
+    - misinformation:competition:misleading_market_positioning
+    - information_hazard:personal_identification:api-db-leak
+    - information_hazard:private_information:unauthorized-share
+    - information_hazard:personal_identification:direct-exposure
+    - information_hazard:private_information:session_leak
+    - information_hazard:personal_identification:social-engineering
+    - information_hazard:private_information:proprietary-algorithm-exposure
+    - information_hazard:private_information:sensitive_business_data
+    - malicious_use:illegal_activities:promotion
+    - malicious_use:cybercrime:assistance
+    - malicious_use:fraud:non_violent
+    - malicious_use:illegal_activities:sex_crime
+    - malicious_use:illegal_activities:violent
+    - malicious_use:excessive_agency:functionality
+    - malicious_use:excessive_agency:permissions
+    - malicious_use:excessive_agency:autonomy
+    - human_computer_interaction:overreliance:interaction-harm
+    - defense_bypass:hacking:sqli
+    - defense_bypass:hacking:shell_injection
+    - defense_bypass:hacking:ssrf
+    - defense_bypass:cybercrime:session_leak
+    - defense_bypass:security_evasion:ascii_smuggling
+    - defense_bypass:security_evasion:bola
+    - defense_bypass:security_evasion:bfla
+    - misinformation:hallucination:knowledge-gaps
+    - misinformation:hallucination:noisy_training_data
+    - misinformation:hallucination:defective_decoding_process
+    - misinformation:hallucination:false_recall
+    - misinformation:hallucination:pursuing_consistent_context
+    - defense_bypass:prompt_injection:direct_injection
+    - defense_bypass:prompt_injection:indirect_injection
+    - defense_bypass:prompt_injection:unintentional_injection
+    - defense_bypass:prompt_injection:intentional_model_influence
+    - defense_bypass:prompt_injection:code_injection
+    - defense_bypass:prompt_injection:payload_splitting
+    - defense_bypass:prompt_injection:multimodal_injection
+    - defense_bypass:prompt_injection:adversarial_suffix
+    - defense_bypass:prompt_injection:multilingual_obfuscated_attack
+
+providers:
+- id: gradio
+  config:
+    url: detoxioai/Pokebot
+    api:
+      path: /_handle_gradio_input
+      params:
+      - name: prompt
+        value: '{{prompt}}'
+      - name: history
+        value: []
+      - name: mode
+        value: Chat
+      transform_response:
+        parser_type: signature
+        content_type: array
+        location:
+        - -1
+        - -1
+        - 1
+
